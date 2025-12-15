@@ -1,0 +1,1683 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Termokimia Interaktif - Pembelajaran Kimia SMA</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    .page {
+      display: none;
+      animation: fadeIn 0.5s ease-in;
+    }
+    
+    .page.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .pulse-animation {
+      animation: pulse 2s infinite;
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .interactive-element {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .interactive-element:hover {
+      transform: scale(1.05);
+    }
+    
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    
+    .flame {
+      animation: flicker 1.5s infinite;
+    }
+    
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .ice {
+      animation: freeze 2s infinite;
+    }
+    
+    @keyframes freeze {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    
+    .quiz-option {
+      transition: all 0.2s ease;
+    }
+    
+    .quiz-option:hover {
+      transform: translateX(5px);
+    }
+    
+    .correct {
+      background-color: #10b981 !important;
+      color: white !important;
+    }
+    
+    .incorrect {
+      background-color: #ef4444 !important;
+      color: white !important;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full w-full bg-gradient-to-br from-blue-50 via-white to-purple-50">
+  <div class="w-full h-full overflow-auto">
+   <div class="max-w-6xl mx-auto px-4 py-8"><!-- Progress Bar -->
+    <div class="mb-6 bg-white rounded-lg shadow-sm p-4">
+     <div class="flex items-center justify-between mb-2"><span class="text-sm font-semibold text-gray-700">Progress Pembelajaran</span> <span id="progress-text" class="text-sm font-bold text-blue-600">0/15</span>
+     </div>
+     <div class="w-full bg-gray-200 rounded-full h-3">
+      <div id="progress-bar" class="progress-bar bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full" style="width: 0%"></div>
+     </div>
+    </div><!-- Page 1: Beranda -->
+    <div class="page active" id="page-1">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <div class="text-center mb-8">
+       <div class="inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-2 rounded-full text-sm font-semibold mb-4">
+        Modul Pembelajaran Kimia SMA
+       </div>
+       <h1 id="main-title" class="text-5xl font-extrabold text-gray-800 mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Termokimia: Energi dalam Reaksi Kimia</h1>
+       <p id="welcome-message" class="text-xl text-gray-600 max-w-3xl mx-auto">Selamat datang di modul pembelajaran interaktif tentang Termokimia. Mari jelajahi dunia energi dalam reaksi kimia dengan cara yang menyenangkan!</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+       <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 card-hover">
+        <div class="text-4xl mb-3">
+         �����
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">Tujuan Pembelajaran</h3>
+        <ul class="space-y-2 text-gray-700">
+         <li class="flex items-start"><span class="mr-2">✓</span> <span>Memahami konsep dasar termokimia dan perubahan energi</span></li>
+         <li class="flex items-start"><span class="mr-2">✓</span> <span>Membedakan reaksi eksoterm dan endoterm</span></li>
+         <li class="flex items-start"><span class="mr-2">✓</span> <span>Menerapkan Hukum Hess dalam perhitungan</span></li>
+         <li class="flex items-start"><span class="mr-2">✓</span> <span>Menghitung energi ikatan dan kalorimetri</span></li>
+        </ul>
+       </div>
+       <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 card-hover">
+        <div class="text-4xl mb-3">
+         📚
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">Materi yang Dipelajari</h3>
+        <ul class="space-y-2 text-gray-700">
+         <li class="flex items-start"><span class="mr-2">📌</span> <span>Konsep sistem dan lingkungan</span></li>
+         <li class="flex items-start"><span class="mr-2">📌</span> <span>Entalpi dan persamaan termokimia</span></li>
+         <li class="flex items-start"><span class="mr-2">📌</span> <span>Hukum Hess dan energi ikatan</span></li>
+         <li class="flex items-start"><span class="mr-2">📌</span> <span>Aplikasi dalam kehidupan sehari-hari</span></li>
+        </ul>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 border-l-4 border-orange-500">
+       <h3 class="text-lg font-bold text-gray-800 mb-2 flex items-center"><span class="text-2xl mr-2">💡</span> Tahukah Kamu?</h3>
+       <p class="text-gray-700">Setiap reaksi kimia melibatkan perubahan energi! Dari proses fotosintesis hingga pembakaran bahan bakar, termokimia menjelaskan bagaimana energi berpindah dan bertransformasi.</p>
+      </div>
+     </div>
+    </div><!-- Page 2: Peta Konsep -->
+    <div class="page" id="page-2">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6 text-center">🗺️ Peta Konsep Termokimia</h2>
+      <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl p-8 mb-6">
+       <div class="flex flex-col items-center space-y-4">
+        <div class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-4 rounded-xl text-center font-bold text-xl shadow-lg pulse-animation">
+         TERMOKIMIA
+        </div>
+        <div class="flex items-center">
+         <div class="w-1 h-12 bg-gray-300"></div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4 w-full">
+         <div class="bg-white rounded-lg p-4 shadow-md card-hover text-center">
+          <div class="text-3xl mb-2">
+           🔄
+          </div>
+          <h4 class="font-bold text-gray-800 mb-2">Konsep Dasar</h4>
+          <p class="text-sm text-gray-600">Sistem, Lingkungan, Energi</p>
+         </div>
+         <div class="bg-white rounded-lg p-4 shadow-md card-hover text-center">
+          <div class="text-3xl mb-2">
+           ⚡
+          </div>
+          <h4 class="font-bold text-gray-800 mb-2">Jenis Reaksi</h4>
+          <p class="text-sm text-gray-600">Eksoterm &amp; Endoterm</p>
+         </div>
+         <div class="bg-white rounded-lg p-4 shadow-md card-hover text-center">
+          <div class="text-3xl mb-2">
+           📊
+          </div>
+          <h4 class="font-bold text-gray-800 mb-2">Entalpi</h4>
+          <p class="text-sm text-gray-600">ΔH &amp; Persamaan</p>
+         </div>
+        </div>
+        <div class="flex items-center">
+         <div class="w-1 h-12 bg-gray-300"></div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4 w-full">
+         <div class="bg-white rounded-lg p-4 shadow-md card-hover text-center">
+          <div class="text-3xl mb-2">
+           🧮
+          </div>
+          <h4 class="font-bold text-gray-800 mb-2">Hukum Hess</h4>
+          <p class="text-sm text-gray-600">Perhitungan ΔH</p>
+         </div>
+         <div class="bg-white rounded-lg p-4 shadow-md card-hover text-center">
+          <div class="text-3xl mb-2">
+           🔗
+          </div>
+          <h4 class="font-bold text-gray-800 mb-2">Energi Ikatan</h4>
+          <p class="text-sm text-gray-600">Pemutusan &amp; Pembentukan</p>
+         </div>
+         <div class="bg-white rounded-lg p-4 shadow-md card-hover text-center">
+          <div class="text-3xl mb-2">
+           🌡️
+          </div>
+          <h4 class="font-bold text-gray-800 mb-2">Kalorimetri</h4>
+          <p class="text-sm text-gray-600">Pengukuran Kalor</p>
+         </div>
+        </div>
+        <div class="flex items-center">
+         <div class="w-1 h-12 bg-gray-300"></div>
+        </div>
+        <div class="bg-gradient-to-r from-green-500 to-teal-500 text-white px-8 py-4 rounded-xl text-center font-bold shadow-lg">
+         APLIKASI DALAM KEHIDUPAN
+        </div>
+       </div>
+      </div>
+      <div class="bg-blue-50 rounded-xl p-6 border-l-4 border-blue-500">
+       <p class="text-gray-700 text-center italic">"Peta konsep ini akan memandu perjalanan belajar Anda memahami termokimia secara sistematis dan terstruktur"</p>
+      </div>
+     </div>
+    </div><!-- Page 3: Materi Perpindahan Kalor -->
+    <div class="page" id="page-3">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6 text-center">🔥 Perpindahan Kalor &amp; Hukum Kekekalan Energi</h2>
+      <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 mb-8 border-l-4 border-orange-500">
+       <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center"><span class="text-3xl mr-3">🔥</span> Api Unggun sebagai Contoh Perpindahan Kalor</h3><!-- Ilustrasi Api Unggun -->
+       <div class="bg-gradient-to-b from-gray-800 to-gray-900 rounded-xl p-8 mb-4 relative overflow-hidden"><!-- Bintang-bintang di malam hari -->
+        <div class="absolute top-2 left-4 text-yellow-200 opacity-70">
+         ✨
+        </div>
+        <div class="absolute top-4 right-8 text-yellow-200 opacity-60">
+         ⭐
+        </div>
+        <div class="absolute top-8 left-20 text-yellow-200 opacity-50">
+         ✨
+        </div>
+        <div class="absolute top-3 right-20 text-yellow-200 opacity-70">
+         ⭐
+        </div>
+        <div class="flex flex-col items-center relative"><!-- Api Unggun SVG -->
+         <svg class="w-48 h-48 mb-4" viewbox="0 0 200 200"><!-- Kayu bakar --> <rect x="40" y="140" width="120" height="12" rx="4" fill="#5D4037" transform="rotate(-15 100 146)" /> <rect x="40" y="140" width="120" height="12" rx="4" fill="#6D4C41" transform="rotate(15 100 146)" /> <rect x="60" y="135" width="80" height="10" rx="3" fill="#4E342E" /> <!-- Api besar (merah) --> <path class="flame" d="M 100 140 Q 85 120 90 95 Q 92 80 100 70 Q 108 80 110 95 Q 115 120 100 140 Z" fill="#FF5722" opacity="0.9">
+           <animate attributename="d" values="M 100 140 Q 85 120 90 95 Q 92 80 100 70 Q 108 80 110 95 Q 115 120 100 140 Z;
+                              M 100 140 Q 80 125 88 100 Q 90 82 100 65 Q 110 82 112 100 Q 120 125 100 140 Z;
+                              M 100 140 Q 85 120 90 95 Q 92 80 100 70 Q 108 80 110 95 Q 115 120 100 140 Z" dur="1.5s" repeatcount="indefinite" />
+          </path> <!-- Api sedang (oranye) --> <path class="flame" d="M 100 135 Q 88 118 92 100 Q 94 88 100 80 Q 106 88 108 100 Q 112 118 100 135 Z" fill="#FF9800" opacity="0.8">
+           <animate attributename="d" values="M 100 135 Q 88 118 92 100 Q 94 88 100 80 Q 106 88 108 100 Q 112 118 100 135 Z;
+                              M 100 135 Q 85 120 90 105 Q 92 90 100 75 Q 108 90 110 105 Q 115 120 100 135 Z;
+                              M 100 135 Q 88 118 92 100 Q 94 88 100 80 Q 106 88 108 100 Q 112 118 100 135 Z" dur="1.3s" repeatcount="indefinite" />
+          </path> <!-- Api kecil (kuning) --> <path class="flame" d="M 100 130 Q 92 118 95 105 Q 97 96 100 90 Q 103 96 105 105 Q 108 118 100 130 Z" fill="#FFC107" opacity="0.9">
+           <animate attributename="d" values="M 100 130 Q 92 118 95 105 Q 97 96 100 90 Q 103 96 105 105 Q 108 118 100 130 Z;
+                              M 100 130 Q 90 120 93 108 Q 95 98 100 85 Q 105 98 107 108 Q 110 120 100 130 Z;
+                              M 100 130 Q 92 118 95 105 Q 97 96 100 90 Q 103 96 105 105 Q 108 118 100 130 Z" dur="1s" repeatcount="indefinite" />
+          </path> <!-- Percikan api --> <circle cx="85" cy="100" r="2" fill="#FFD700" opacity="0.8">
+           <animate attributename="cy" values="100;60;100" dur="2s" repeatcount="indefinite" />
+           <animate attributename="opacity" values="0.8;0;0.8" dur="2s" repeatcount="indefinite" />
+          </circle> <circle cx="115" cy="95" r="2" fill="#FFD700" opacity="0.7">
+           <animate attributename="cy" values="95;55;95" dur="2.5s" repeatcount="indefinite" />
+           <animate attributename="opacity" values="0.7;0;0.7" dur="2.5s" repeatcount="indefinite" />
+          </circle> <circle cx="95" cy="110" r="1.5" fill="#FFA500" opacity="0.6">
+           <animate attributename="cy" values="110;70;110" dur="1.8s" repeatcount="indefinite" />
+           <animate attributename="opacity" values="0.6;0;0.6" dur="1.8s" repeatcount="indefinite" />
+          </circle>
+         </svg><!-- Panah perpindahan kalor -->
+         <div class="grid grid-cols-3 gap-8 mt-4">
+          <div class="flex flex-col items-center">
+           <div class="text-4xl mb-2 opacity-70">
+            ���
+           </div>
+           <div class="flex flex-col items-center">
+            <svg class="w-6 h-12 mb-1" viewbox="0 0 24 48"><path d="M 12 10 L 12 38 M 12 38 L 8 34 M 12 38 L 16 34" stroke="#FFA500" stroke-width="2" fill="none">
+              <animate attributename="opacity" values="1;0.5;1" dur="1s" repeatcount="indefinite" />
+             </path>
+            </svg><span class="text-orange-400 text-sm font-bold">Kalor</span>
+           </div>
+           <p class="text-white text-xs mt-1 text-center">Orang merasa<br>
+            hangat</p>
+          </div>
+          <div class="flex flex-col items-center">
+           <div class="text-5xl flame">
+            🔥
+           </div>
+           <p class="text-yellow-400 text-sm font-bold mt-2">Sumber Kalor</p>
+          </div>
+          <div class="flex flex-col items-center">
+           <div class="text-4xl mb-2 opacity-70">
+            👤
+           </div>
+           <div class="flex flex-col items-center">
+            <svg class="w-6 h-12 mb-1" viewbox="0 0 24 48"><path d="M 12 10 L 12 38 M 12 38 L 8 34 M 12 38 L 16 34" stroke="#FFA500" stroke-width="2" fill="none">
+              <animate attributename="opacity" values="1;0.5;1" dur="1s" repeatcount="indefinite" />
+             </path>
+            </svg><span class="text-orange-400 text-sm font-bold">Kalor</span>
+           </div>
+           <p class="text-white text-xs mt-1 text-center">Orang merasa<br>
+            hangat</p>
+          </div>
+         </div>
+        </div><!-- Label malam hari -->
+        <div class="absolute bottom-2 right-4 text-gray-400 text-xs italic">
+         🌙 Malam hari di perkemahan
+        </div>
+       </div>
+       <p class="text-gray-700 mb-4 leading-relaxed">Kegiatan api unggun memberikan kehangatan di malam hari, menunjukkan adanya perpindahan kalor (panas) dari api ke lingkungan sekitar. Kalor merupakan bentuk energi yang dapat dideteksi melalui perubahan suhu: <strong>semakin tinggi suhu, semakin besar kalor yang dimiliki benda.</strong></p>
+       <div class="bg-white rounded-lg p-4 shadow-sm">
+        <p class="text-sm text-gray-600 italic text-center">"Kehangatan yang Anda rasakan saat berkemah adalah bukti nyata perpindahan energi kalor dari api ke tubuh Anda"</p>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-8">
+       <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center"><span class="text-3xl mr-3">���️</span> Hukum Kekekalan Energi dalam Termodinamika</h3>
+       <div class="bg-white rounded-lg p-4 mb-4 border-l-4 border-blue-500">
+        <p class="text-gray-700 font-semibold text-lg mb-2">"Energi tidak dapat diciptakan atau dimusnahkan, hanya dapat berubah bentuk"</p>
+        <p class="text-sm text-gray-600">Energi Dalam (E) adalah total energi suatu sistem, yang sulit diukur langsung. Yang dapat diukur adalah <strong>perubahan energi (ΔE)</strong>.</p>
+       </div>
+       <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg p-4">
+         <h4 class="font-bold text-gray-800 mb-2">📐 Rumus Perubahan Energi</h4>
+         <div class="bg-white rounded p-3 text-center mb-2">
+          <p class="text-xl font-bold text-blue-700">ΔE = q + w</p>
+         </div>
+         <div class="text-sm text-gray-600 space-y-1">
+          <p><strong>q</strong> = kalor sistem</p>
+          <p><strong>w</strong> = kerja/usaha sistem</p>
+          <p class="text-xs pt-2 italic">w = P × ΔV (kerja akibat perubahan volume)</p>
+         </div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg p-4">
+         <h4 class="font-bold text-gray-800 mb-2">🔬 Kondisi Tekanan Tetap</h4>
+         <p class="text-sm text-gray-600 mb-3">Jika tekanan tetap dan tidak ada perubahan volume (ΔV = 0), maka w = 0.</p>
+         <div class="bg-white rounded p-3 text-center">
+          <p class="text-lg font-bold text-purple-700">ΔE = q</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg p-4">
+        <h4 class="font-bold text-gray-800 mb-3">🌡️ Entalpi (H) dan Perubahan Entalpi (ΔH)</h4>
+        <p class="text-sm text-gray-700 mb-3"><strong>Entalpi (H)</strong> adalah total energi sistem pada tekanan tetap. Nilai entalpi mutlak tidak dapat diukur, yang diukur adalah <strong>perubahan entalpi (ΔH)</strong>.</p>
+        <div class="grid md:grid-cols-2 gap-3">
+         <div class="bg-white rounded p-3">
+          <p class="text-center font-bold text-indigo-700 mb-1">ΔH = q</p>
+          <p class="text-xs text-gray-600 text-center">(pada tekanan tetap)</p>
+         </div>
+         <div class="bg-white rounded p-3">
+          <p class="text-center font-bold text-indigo-700 mb-1">ΔH = H<sub>akhir</sub> - H<sub>awal</sub></p>
+          <p class="text-xs text-gray-600 text-center">(definisi perubahan entalpi)</p>
+         </div>
+        </div>
+        <div class="mt-3 space-y-2 text-sm text-gray-700">
+         <div class="flex items-start"><span class="text-red-500 mr-2">•</span> <span><strong>ΔH positif (+)</strong> → sistem menyerap kalor (reaksi endoterm)</span>
+         </div>
+         <div class="flex items-start"><span class="text-blue-500 mr-2">•</span> <span><strong>ΔH negatif (-)</strong> → sistem melepaskan kalor (reaksi eksoterm)</span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-xl p-6 border-l-4 border-green-500">
+       <h4 class="font-bold text-gray-800 mb-3 flex items-center"><span class="text-2xl mr-2">📌</span> Inti Sari</h4>
+       <p class="text-gray-700 leading-relaxed">Perubahan entalpi (ΔH) menggambarkan pertukaran kalor dalam suatu sistem kimia pada tekanan tetap. Konsep ini terkait langsung dengan hukum kekekalan energi dan dapat diaplikasikan dalam menganalisis reaksi kimia, seperti proses pembakaran pada api unggun.</p>
+      </div>
+     </div>
+    </div><!-- Page 4: Konsep Dasar Termokimia -->
+    <div class="page" id="page-4">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">🔬 Konsep Dasar Termokimia</h2>
+      <div class="bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl p-6 mb-6">
+       <h3 class="text-2xl font-bold text-gray-800 mb-3">Apa itu Termokimia?</h3>
+       <p class="text-lg text-gray-700 leading-relaxed">Termokimia adalah cabang ilmu kimia yang mempelajari perubahan energi, khususnya kalor, yang menyertai reaksi kimia dan perubahan fisika. Setiap reaksi kimia melibatkan pemutusan dan pembentukan ikatan, yang selalu disertai dengan perpindahan energi.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+       <div class="bg-white border-2 border-blue-200 rounded-xl p-6 card-hover">
+        <div class="flex items-center mb-4">
+         <div class="bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl mr-3">
+          🎯
+         </div>
+         <h4 class="text-xl font-bold text-gray-800">Sistem</h4>
+        </div>
+        <p class="text-gray-700 mb-3">Bagian yang menjadi fokus pengamatan dalam perubahan energi. Biasanya berupa zat-zat yang bereaksi dan produk reaksi.</p>
+        <div class="bg-blue-50 rounded-lg p-3 text-sm text-gray-600"><strong>Contoh:</strong> Larutan dalam gelas kimia saat reaksi berlangsung
+        </div>
+       </div>
+       <div class="bg-white border-2 border-purple-200 rounded-xl p-6 card-hover">
+        <div class="flex items-center mb-4">
+         <div class="bg-purple-500 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl mr-3">
+          🌍
+         </div>
+         <h4 class="text-xl font-bold text-gray-800">Lingkungan</h4>
+        </div>
+        <p class="text-gray-700 mb-3">Segala sesuatu di luar sistem yang dapat berinteraksi dengan sistem dan mempengaruhi perubahan energi.</p>
+        <div class="bg-purple-50 rounded-lg p-3 text-sm text-gray-600"><strong>Contoh:</strong> Gelas kimia, udara sekitar, termometer, dan alat-alat lainnya
+        </div>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 mb-6">
+       <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center"><span class="text-2xl mr-2">⚡</span> Jenis Sistem Berdasarkan Interaksi</h3>
+       <div class="grid md:grid-cols-3 gap-4"><!-- Sistem Terbuka -->
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <h5 class="font-bold text-gray-800 mb-3 text-center">🔓 Sistem Terbuka</h5><!-- Ilustrasi Gelas Kopi Terbuka -->
+         <div class="bg-gradient-to-b from-blue-100 to-blue-50 rounded-lg p-4 mb-3 flex justify-center">
+          <svg width="120" height="140" viewbox="0 0 120 140"><!-- Uap panas keluar --> <g opacity="0.6">
+            <path d="M 40 25 Q 35 15 40 5" stroke="#94a3b8" stroke-width="2" fill="none" stroke-linecap="round">
+             <animate attributename="opacity" values="0.6;0.2;0.6" dur="2s" repeatcount="indefinite" />
+            </path>
+            <path d="M 60 20 Q 55 10 60 0" stroke="#94a3b8" stroke-width="2" fill="none" stroke-linecap="round">
+             <animate attributename="opacity" values="0.4;0.6;0.4" dur="2.5s" repeatcount="indefinite" />
+            </path>
+            <path d="M 80 25 Q 75 15 80 5" stroke="#94a3b8" stroke-width="2" fill="none" stroke-linecap="round">
+             <animate attributename="opacity" values="0.5;0.3;0.5" dur="2.2s" repeatcount="indefinite" />
+            </path>
+           </g> <!-- Gelas --> <path d="M 30 40 L 35 120 L 85 120 L 90 40 Z" fill="#e0f2fe" stroke="#0369a1" stroke-width="2" /> <!-- Kopi --> <path d="M 32 60 L 36 115 L 84 115 L 88 60 Z" fill="#92400e" opacity="0.8" /> <!-- Permukaan kopi bergelombang --> <ellipse cx="60" cy="60" rx="28" ry="4" fill="#78350f">
+            <animate attributename="ry" values="4;5;4" dur="1.5s" repeatcount="indefinite" />
+           </ellipse> <!-- Label panah keluar --> <text x="60" y="135" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="bold">
+            Materi &amp; Energi ↑
+           </text>
+          </svg>
+         </div>
+         <p class="text-sm text-gray-600 mb-2">Terjadi pertukaran materi dan energi dengan lingkungan</p>
+         <div class="bg-blue-50 rounded p-2">
+          <p class="text-xs text-gray-700"><strong>Contoh:</strong> Gelas kopi terbuka - uap air keluar, kalor hilang ke udara</p>
+         </div>
+        </div><!-- Sistem Tertutup -->
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <h5 class="font-bold text-gray-800 mb-3 text-center">🔒 Sistem Tertutup</h5><!-- Ilustrasi Gelas Kopi Tertutup -->
+         <div class="bg-gradient-to-b from-green-100 to-green-50 rounded-lg p-4 mb-3 flex justify-center">
+          <svg width="120" height="140" viewbox="0 0 120 140"><!-- Tutup gelas --> <ellipse cx="60" cy="35" rx="32" ry="6" fill="#64748b" stroke="#334155" stroke-width="2" /> <rect x="28" y="30" width="64" height="8" fill="#64748b" /> <!-- Gelas --> <path d="M 30 40 L 35 120 L 85 120 L 90 40 Z" fill="#d1fae5" stroke="#059669" stroke-width="2" /> <!-- Kopi --> <path d="M 32 60 L 36 115 L 84 115 L 88 60 Z" fill="#92400e" opacity="0.8" /> <!-- Permukaan kopi --> <ellipse cx="60" cy="60" rx="28" ry="4" fill="#78350f" /> <!-- Uap panas di dalam (terjebak) --> <g opacity="0.5">
+            <circle cx="50" cy="48" r="2" fill="#cbd5e1">
+             <animate attributename="cy" values="48;45;48" dur="2s" repeatcount="indefinite" />
+            </circle>
+            <circle cx="70" cy="50" r="2" fill="#cbd5e1">
+             <animate attributename="cy" values="50;47;50" dur="2.3s" repeatcount="indefinite" />
+            </circle>
+           </g> <!-- Panah energi keluar dari dinding gelas --> <g>
+            <path d="M 28 70 L 18 70" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRed1)" />
+            <path d="M 92 70 L 102 70" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRed1)" />
+            <defs>
+             <marker id="arrowRed1" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3 z" fill="#ef4444" />
+             </marker>
+            </defs>
+           </g> <!-- Label --> <text x="60" y="135" text-anchor="middle" font-size="10" fill="#059669" font-weight="bold">
+            Hanya Energi →
+           </text>
+          </svg>
+         </div>
+         <p class="text-sm text-gray-600 mb-2">Hanya terjadi pertukaran energi, tidak ada pertukaran materi</p>
+         <div class="bg-green-50 rounded p-2">
+          <p class="text-xs text-gray-700"><strong>Contoh:</strong> Gelas kopi bertutup - uap terjebak, kalor tetap keluar</p>
+         </div>
+        </div><!-- Sistem Terisolasi -->
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <h5 class="font-bold text-gray-800 mb-3 text-center">🔐 Sistem Terisolasi</h5><!-- Ilustrasi Termos -->
+         <div class="bg-gradient-to-b from-purple-100 to-purple-50 rounded-lg p-4 mb-3 flex justify-center">
+          <svg width="120" height="140" viewbox="0 0 120 140"><!-- Tutup termos --> <ellipse cx="60" cy="25" rx="20" ry="5" fill="#475569" stroke="#1e293b" stroke-width="2" /> <rect x="40" y="20" width="40" height="8" fill="#475569" /> <circle cx="60" cy="20" r="4" fill="#94a3b8" /> <!-- Badan termos (dinding ganda) --> <path d="M 35 30 L 35 105 Q 35 115 45 115 L 75 115 Q 85 115 85 105 L 85 30 Z" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2.5" /> <!-- Dinding dalam termos --> <path d="M 40 35 L 40 103 Q 40 110 47 110 L 73 110 Q 80 110 80 103 L 80 35 Z" fill="#ddd6fe" stroke="#6366f1" stroke-width="1.5" /> <!-- Kopi di dalam --> <path d="M 42 60 L 42 102 Q 42 108 48 108 L 72 108 Q 78 108 78 102 L 78 60 Z" fill="#92400e" opacity="0.8" /> <!-- Permukaan kopi --> <ellipse cx="60" cy="60" rx="18" ry="3" fill="#78350f" /> <!-- Ruang vakum (garis putus-putus) --> <rect x="36" y="40" width="3" height="60" fill="#c7d2fe" opacity="0.5" /> <rect x="81" y="40" width="3" height="60" fill="#c7d2fe" opacity="0.5" /> <!-- Tanda X untuk tidak ada perpindahan --> <g stroke="#dc2626" stroke-width="2.5">
+            <line x1="15" y1="65" x2="25" y2="75" />
+            <line x1="25" y1="65" x2="15" y2="75" />
+            <line x1="95" y1="65" x2="105" y2="75" />
+            <line x1="105" y1="65" x2="95" y2="75" />
+           </g> <!-- Label --> <text x="60" y="133" text-anchor="middle" font-size="10" fill="#6366f1" font-weight="bold">
+            Tidak Ada ✗
+           </text>
+          </svg>
+         </div>
+         <p class="text-sm text-gray-600 mb-2">Tidak ada pertukaran materi maupun energi</p>
+         <div class="bg-purple-50 rounded p-2">
+          <p class="text-xs text-gray-700"><strong>Contoh:</strong> Termos - terisolasi sempurna, kopi tetap panas</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="bg-green-50 rounded-xl p-6 border-l-4 border-green-500">
+       <h4 class="font-bold text-gray-800 mb-2 flex items-center"><span class="text-xl mr-2">💡</span> Kunci Pemahaman</h4>
+       <p class="text-gray-700">Dalam termokimia, kita selalu fokus pada perpindahan energi antara sistem dan lingkungan. Memahami batasan sistem sangat penting untuk menganalisis perubahan energi dengan tepat!</p>
+      </div>
+     </div>
+    </div><!-- Page 5: Reaksi Eksoterm -->
+    <div class="page" id="page-5">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">🔥 Reaksi Eksoterm</h2>
+      <div class="bg-gradient-to-r from-red-100 to-orange-100 rounded-xl p-6 mb-6">
+       <h3 class="text-2xl font-bold text-gray-800 mb-3 flex items-center"><span class="flame text-3xl mr-2">🔥</span> Definisi Reaksi Eksoterm</h3>
+       <p class="text-lg text-gray-700 leading-relaxed mb-3">Pada reaksi eksoterm, sistem mengalami pelepasan kalor ke lingkungan. Hal ini terjadi ketika suhu sistem lebih tinggi daripada suhu di sekitarnya, sehingga kalor mengalir dari sistem menuju lingkungan. Proses tersebut mengakibatkan entalpi atau energi sistem setelah reaksi (H<sub>akhir</sub>) menjadi lebih rendah dibandingkan sebelum reaksi (H<sub>awal</sub>). Dengan rumus ΔH = H<sub>akhir</sub> – H<sub>awal</sub>, karena H<sub>akhir</sub> lebih kecil dari H<sub>awal</sub>, maka nilai ΔH akan negatif (ΔH &lt; 0).</p>
+       <div class="bg-white rounded-lg p-4 shadow-sm">
+        <p class="text-center font-bold text-xl text-red-600">ΔH &lt; 0 (negatif)</p>
+       </div>
+      </div>
+      <div class="bg-white border-2 border-red-300 rounded-xl p-6 mb-6">
+       <h4 class="text-xl font-bold text-gray-800 mb-4">📊 Diagram Energi Reaksi Eksoterm</h4>
+       <div class="bg-gradient-to-b from-red-50 to-orange-50 rounded-lg p-6 relative">
+        <div class="absolute top-8 left-4 bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+         Reaktan
+        </div>
+        <div class="absolute bottom-8 left-4 bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+         Produk
+        </div>
+        <svg class="w-full h-64" viewbox="0 0 300 200"><path d="M 30 40 L 120 40 L 150 140 L 270 140" stroke="#ef4444" stroke-width="3" fill="none" marker-end="url(#arrowred)" /> <defs>
+          <marker id="arrowred" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto" markerunits="strokeWidth">
+           <path d="M0,0 L0,6 L9,3 z" fill="#ef4444" />
+          </marker>
+         </defs> <text x="180" y="90" fill="#dc2626" font-size="14" font-weight="bold">
+          ΔH &lt; 0
+         </text> <text x="160" y="110" fill="#dc2626" font-size="12">
+          (Melepas Kalor)
+         </text>
+        </svg>
+       </div>
+      </div>
+      <div class="bg-white border-2 border-orange-300 rounded-xl p-6 mb-6">
+       <h4 class="text-xl font-bold text-gray-800 mb-4">🔬 Contoh Reaksi Eksoterm</h4>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-red-50 rounded-lg p-4">
+         <p class="font-semibold text-gray-800 mb-1">🔥 Pembakaran</p>
+         <p class="text-sm text-gray-600 mb-2">C₃H₈ + 5O₂ → 3CO₂ + 4H₂O + kalor</p>
+         <p class="text-xs text-gray-600 italic">Pembakaran propana (gas LPG) menghasilkan kalor yang digunakan untuk memasak. Energi kimia dalam ikatan C-H dan C-C diubah menjadi energi panas dan cahaya.</p>
+        </div>
+        <div class="bg-orange-50 rounded-lg p-4">
+         <p class="font-semibold text-gray-800 mb-1">💨 Respirasi</p>
+         <p class="text-sm text-gray-600 mb-2">C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energi</p>
+         <p class="text-xs text-gray-600 italic">Proses pernapasan sel mengubah glukosa dan oksigen menjadi energi (ATP) yang diperlukan tubuh untuk beraktivitas. Kalor yang dihasilkan mempertahankan suhu tubuh.</p>
+        </div>
+        <div class="bg-yellow-50 rounded-lg p-4">
+         <p class="font-semibold text-gray-800 mb-1">⚡ Netralisasi</p>
+         <p class="text-sm text-gray-600 mb-2">HCl + NaOH → NaCl + H₂O + kalor</p>
+         <p class="text-xs text-gray-600 italic">Reaksi antara asam dan basa menghasilkan garam dan air disertai pelepasan kalor. Larutan akan terasa hangat setelah reaksi berlangsung.</p>
+        </div>
+        <div class="bg-red-50 rounded-lg p-4">
+         <p class="font-semibold text-gray-800 mb-1">🧪 Pelarutan asam</p>
+         <p class="text-sm text-gray-600 mb-2">H₂SO₄(l) → H₂SO₄(aq) + kalor</p>
+         <p class="text-xs text-gray-600 italic">Pelarutan asam sulfat pekat dalam air melepaskan kalor sangat besar. Larutan akan sangat panas, sehingga asam harus ditambahkan ke air (bukan sebaliknya) untuk keamanan.</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-yellow-50 rounded-xl p-6 border-l-4 border-yellow-500 mb-6">
+       <h4 class="font-bold text-gray-800 mb-3 flex items-center"><span class="text-2xl mr-2">🌡️</span> Ciri-ciri Reaksi Eksoterm</h4>
+       <ul class="space-y-2 text-gray-700">
+        <li class="flex items-start"><span class="text-red-500 mr-2">✓</span> <span>Suhu lingkungan meningkat (terasa panas)</span></li>
+        <li class="flex items-start"><span class="text-red-500 mr-2">✓</span> <span>Nilai ΔH bertanda negatif</span></li>
+        <li class="flex items-start"><span class="text-red-500 mr-2">✓</span> <span>Energi produk &lt; Energi reaktan</span></li>
+        <li class="flex items-start"><span class="text-red-500 mr-2">✓</span> <span>Melepaskan energi ke lingkungan</span></li>
+       </ul>
+      </div>
+      <div class="bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl p-6">
+       <h4 class="font-bold text-xl mb-2">🎯 Ingat!</h4>
+       <p class="text-lg">Eksoterm = Exo (keluar) + Therm (panas) → Melepaskan panas ke luar sistem</p>
+      </div>
+     </div>
+    </div><!-- Page 6: Reaksi Endoterm -->
+    <div class="page" id="page-6">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">❄️ Reaksi Endoterm</h2>
+      <div class="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-xl p-6 mb-6">
+       <h3 class="text-2xl font-bold text-gray-800 mb-3 flex items-center"><span class="ice text-3xl mr-2">❄️</span> Definisi Reaksi Endoterm</h3>
+       <p class="text-lg text-gray-700 leading-relaxed mb-3">Pada keadaan di mana suhu sistem lebih rendah dari suhu lingkungan, maka akan terjadi aliran kalor dari lingkungan menuju sistem. Dengan kata lain, kalor akan masuk menuju sistem. Hal ini dikenal dengan proses endoterm.</p>
+       <p class="text-lg text-gray-700 leading-relaxed mb-3">Pada keadaan seperti ini kalor sistem bertambah, maka entalpi akhir reaksi akan menjadi lebih besar dibanding entalpi awal sebelum reaksi. Dengan demikian besarnya perubahan entalpi (ΔH) adalah:</p>
+       <div class="bg-white rounded-lg p-4 shadow-sm mb-3">
+        <p class="text-center font-bold text-lg text-blue-700 mb-2">ΔH = H<sub>akhir</sub> - H<sub>awal</sub></p>
+        <p class="text-center text-gray-700 mb-2">ΔH = besar - kecil</p>
+        <p class="text-center font-bold text-xl text-blue-600">ΔH &gt; 0 (positif)</p>
+       </div>
+       <p class="text-lg text-gray-700 leading-relaxed">Dengan demikian pada reaksi endoterm besarnya nilai perubahan entalpi bertanda positif. Ciri reaksi endoterm ini terjadi pada reaksi yang mengalami penurunan suhu.</p>
+      </div>
+      <div class="bg-white border-2 border-blue-300 rounded-xl p-6 mb-6">
+       <h4 class="text-xl font-bold text-gray-800 mb-4">📊 Diagram Energi Reaksi Endoterm</h4>
+       <div class="bg-gradient-to-b from-blue-50 to-cyan-50 rounded-lg p-6">
+        <div class="relative" style="height: 300px;">
+         <div class="absolute bottom-20 left-4 bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+          Reaktan
+         </div>
+         <div class="absolute top-8 left-4 bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+          Produk
+         </div>
+         <svg class="absolute inset-0 w-full h-full" viewbox="0 0 300 250"><path d="M 30 180 L 120 180 L 150 60 L 270 60" stroke="#3b82f6" stroke-width="3" fill="none" marker-end="url(#arrowblue)" /> <defs>
+           <marker id="arrowblue" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto" markerunits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#3b82f6" />
+           </marker>
+          </defs> <text x="180" y="120" fill="#2563eb" font-size="14" font-weight="bold">
+           ΔH &gt; 0
+          </text> <text x="160" y="140" fill="#2563eb" font-size="12">
+           (Menyerap Kalor)
+          </text> <!-- Panah energi masuk dari bawah --> <path d="M 135 220 L 135 190" stroke="#ef4444" stroke-width="3" fill="none" marker-end="url(#arrowred2)" /> <defs>
+           <marker id="arrowred2" markerwidth="10" markerheight="10" refx="9" refy="3" orient="auto" markerunits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#ef4444" />
+           </marker>
+          </defs> <text x="90" y="235" fill="#ef4444" font-size="12" font-weight="bold">
+           Kalor Diserap
+          </text>
+         </svg>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white border-2 border-cyan-300 rounded-xl p-6 mb-6">
+       <h4 class="text-xl font-bold text-gray-800 mb-4">🔬 Contoh Reaksi Endoterm</h4>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-blue-50 rounded-lg p-4">
+         <p class="font-semibold text-gray-800 mb-1">🌿 Fotosintesis</p>
+         <p class="text-sm text-gray-600 mb-2">6CO₂ + 6H₂O + energi → C₆H₁₂O₆ + 6O₂</p>
+         <p class="text-xs text-gray-600 italic">Tumbuhan menyerap energi cahaya matahari untuk mengubah karbon dioksida dan air menjadi glukosa dan oksigen. Proses ini memerlukan energi dari luar sistem (cahaya matahari) sehingga bersifat endoterm.</p>
+        </div>
+        <div class="bg-cyan-50 rounded-lg p-4">
+         <p class="font-semibold text-gray-800 mb-1">🧊 Pelelehan es</p>
+         <p class="text-sm text-gray-600 mb-2">H₂O(s) + kalor → H₂O(l)</p>
+         <p class="text-xs text-gray-600 italic">Es padat menyerap kalor dari lingkungan untuk berubah menjadi air cair. Energi diperlukan untuk memutuskan ikatan antar molekul air dalam struktur kristal es, sehingga suhu lingkungan menurun.</p>
+        </div>
+        <div class="bg-sky-50 rounded-lg p-4">
+         <p class="font-semibold text-gray-800 mb-1">💧 Penguapan air</p>
+         <p class="text-sm text-gray-600 mb-2">H₂O(l) + kalor → H₂O(g)</p>
+         <p class="text-xs text-gray-600 italic">Air cair memerlukan energi untuk mengatasi gaya tarik antar molekul dan berubah menjadi uap air. Proses ini menyerap kalor dari lingkungan, membuat area sekitar terasa lebih dingin (seperti saat berkeringat).</p>
+        </div>
+        <div class="bg-blue-50 rounded-lg p-4">
+         <p class="font-semibold text-gray-800 mb-1">⚗️ Dekomposisi Kalsium Karbonat</p>
+         <p class="text-sm text-gray-600 mb-2">CaCO₃(s) + kalor → CaO(s) + CO₂(g)</p>
+         <p class="text-xs text-gray-600 italic">Penguraian batu kapur (kalsium karbonat) menjadi kapur tohor (kalsium oksida) dan gas karbon dioksida memerlukan pemanasan tinggi. Energi diperlukan untuk memutuskan ikatan kimia dalam CaCO₃.</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-cyan-50 rounded-xl p-6 border-l-4 border-cyan-500 mb-6">
+       <h4 class="font-bold text-gray-800 mb-3 flex items-center"><span class="text-2xl mr-2">🌡️</span> Ciri-ciri Reaksi Endoterm</h4>
+       <ul class="space-y-2 text-gray-700">
+        <li class="flex items-start"><span class="text-blue-500 mr-2">���</span> <span>Suhu lingkungan menurun (terasa dingin)</span></li>
+        <li class="flex items-start"><span class="text-blue-500 mr-2">✓</span> <span>Nilai ΔH bertanda positif</span></li>
+        <li class="flex items-start"><span class="text-blue-500 mr-2">✓</span> <span>Energi produk &gt; Energi reaktan</span></li>
+        <li class="flex items-start"><span class="text-blue-500 mr-2">✓</span> <span>Menyerap energi dari lingkungan</span></li>
+       </ul>
+      </div>
+      <div class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl p-6">
+       <h4 class="font-bold text-xl mb-2">🎯 Ingat!</h4>
+       <p class="text-lg">Endoterm = Endo (masuk) + Therm (panas) → Menyerap panas dari lingkungan</p>
+      </div>
+     </div>
+    </div><!-- Page 7: Entalpi dan Persamaan Termokimia -->
+    <div class="page" id="page-7">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">📊 Entalpi dan Persamaan Termokimia</h2>
+      <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl p-6 mb-6">
+       <h3 class="text-2xl font-bold text-gray-800 mb-3">Apa itu Entalpi (H)?</h3>
+       <p class="text-lg text-gray-700 leading-relaxed mb-3">Entalpi adalah jumlah total energi dalam suatu sistem. Dalam termokimia, yang penting adalah <strong>perubahan entalpi (ΔH)</strong>, yaitu selisih entalpi produk dengan entalpi reaktan.</p>
+       <div class="bg-white rounded-lg p-4 shadow-sm">
+        <p class="text-center font-bold text-xl text-purple-600">ΔH = H<sub>produk</sub> - H<sub>reaktan</sub></p>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+       <div class="bg-white border-2 border-purple-300 rounded-xl p-6">
+        <h4 class="text-xl font-bold text-gray-800 mb-4">📝 Persamaan Termokimia</h4>
+        <p class="text-gray-700 mb-4">Persamaan termokimia adalah persamaan reaksi kimia yang menyertakan nilai perubahan entalpi (ΔH).</p>
+        <div class="space-y-3">
+         <div class="bg-red-50 rounded-lg p-3">
+          <p class="font-semibold text-gray-800 mb-2">Contoh Eksoterm:</p>
+          <p class="text-sm text-gray-700">CH₄(g) + 2O₂(g) → CO₂(g) + 2H₂O(l)</p>
+          <p class="text-sm text-red-600 font-bold">ΔH = -890 kJ</p>
+         </div>
+         <div class="bg-blue-50 rounded-lg p-3">
+          <p class="font-semibold text-gray-800 mb-2">Contoh Endoterm:</p>
+          <p class="text-sm text-gray-700">N₂(g) + O₂(g) → 2NO(g)</p>
+          <p class="text-sm text-blue-600 font-bold">ΔH = +180 kJ</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white border-2 border-pink-300 rounded-xl p-6">
+        <h4 class="text-xl font-bold text-gray-800 mb-4">🔑 Aturan Penulisan</h4>
+        <ul class="space-y-3 text-gray-700">
+         <li class="flex items-start"><span class="text-purple-500 mr-2 font-bold">1.</span> <span>Koefisien menunjukkan jumlah mol</span></li>
+         <li class="flex items-start"><span class="text-purple-500 mr-2 font-bold">2.</span> <span>Wujud zat harus dituliskan: (s), (l), (g), (aq)</span></li>
+         <li class="flex items-start"><span class="text-purple-500 mr-2 font-bold">3.</span> <span>��H ditulis setelah persamaan reaksi</span></li>
+         <li class="flex items-start"><span class="text-purple-500 mr-2 font-bold">4.</span> <span>Satuan ΔH biasanya kJ atau kJ/mol</span></li>
+         <li class="flex items-start"><span class="text-purple-500 mr-2 font-bold">5.</span> <span>Tanda ΔH sesuai jenis reaksi</span></li>
+        </ul>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6 mb-6 border-l-4 border-yellow-500">
+       <h4 class="font-bold text-gray-800 mb-3 text-xl">�� Jenis-jenis Entalpi Standar</h4>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <p class="font-bold text-gray-800 mb-1">ΔH<sub>f</sub>° (Pembentukan)</p>
+         <p class="text-sm text-gray-600">Kalor yang diperlukan untuk membentuk 1 mol senyawa dari unsur-unsurnya</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <p class="font-bold text-gray-800 mb-1">ΔH<sub>c</sub>° (Pembakaran)</p>
+         <p class="text-sm text-gray-600">Kalor yang dibebaskan saat membakar 1 mol zat sempurna</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <p class="font-bold text-gray-800 mb-1">ΔH<sub>d</sub>° (Penguraian)</p>
+         <p class="text-sm text-gray-600">Kalor yang diperlukan untuk menguraikan 1 mol senyawa</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+         <p class="font-bold text-gray-800 mb-1">ΔH<sub>n</sub>° (Netralisasi)</p>
+         <p class="text-sm text-gray-600">Kalor yang dibebaskan saat pembentukan 1 mol air dari reaksi asam-basa</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl p-6">
+       <h4 class="font-bold text-xl mb-2">💡 Penting!</h4>
+       <p class="text-lg">Perubahan entalpi bergantung pada keadaan awal dan akhir sistem, tidak bergantung pada jalur reaksi (dasar Hukum Hess).</p>
+      </div>
+     </div>
+    </div><!-- Page 8: Hukum Hess -->
+    <div class="page" id="page-8">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">🧮 Hukum Hess</h2>
+      <div class="bg-gradient-to-r from-green-100 to-teal-100 rounded-xl p-6 mb-6">
+       <h3 class="text-2xl font-bold text-gray-800 mb-3">Bunyi Hukum Hess</h3>
+       <p class="text-lg text-gray-700 leading-relaxed italic mb-3">"Perubahan entalpi suatu reaksi tidak bergantung pada jalannya reaksi (jalur reaksi), tetapi hanya bergantung pada keadaan awal dan keadaan akhir sistem."</p>
+       <div class="bg-white rounded-lg p-4 shadow-sm">
+        <p class="text-center font-bold text-xl text-green-600">ΔH<sub>total</sub> = ΣΔH<sub>langkah</sub></p>
+       </div>
+      </div>
+      <div class="bg-white border-2 border-green-300 rounded-xl p-6 mb-6">
+       <h4 class="text-xl font-bold text-gray-800 mb-4">📊 Diagram Siklus Hess</h4>
+       <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-lg p-8">
+        <div class="flex flex-col items-center space-y-6">
+         <div class="flex items-center justify-between w-full max-w-2xl">
+          <div class="bg-blue-500 text-white px-6 py-3 rounded-lg font-bold">
+           A
+          </div>
+          <div class="flex-1 mx-4 border-t-4 border-green-500 relative">
+           <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-3 py-1 rounded text-sm">
+            ΔH₁
+           </div>
+          </div>
+          <div class="bg-purple-500 text-white px-6 py-3 rounded-lg font-bold">
+           C
+          </div>
+         </div>
+         <div class="flex items-center justify-center w-full max-w-2xl">
+          <div class="flex flex-col items-center">
+           <div class="h-16 border-l-4 border-teal-500 relative">
+            <div class="absolute left-8 top-1/2 transform -translate-y-1/2 bg-teal-500 text-white px-3 py-1 rounded text-sm whitespace-nowrap">
+             ΔH��
+            </div>
+           </div>
+           <div class="bg-orange-500 text-white px-6 py-3 rounded-lg font-bold">
+            B
+           </div>
+           <div class="h-16 border-l-4 border-teal-500 relative">
+            <div class="absolute left-8 top-1/2 transform -translate-y-1/2 bg-teal-500 text-white px-3 py-1 rounded text-sm whitespace-nowrap">
+             ΔH₃
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="text-center mt-6 bg-white rounded-lg p-4">
+         <p class="font-bold text-gray-800">ΔH₁ = ΔH₂ + ΔH₃</p>
+        </div>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+       <div class="bg-white border-2 border-teal-300 rounded-xl p-6">
+        <h4 class="text-xl font-bold text-gray-800 mb-4">��️ Cara Menghitung dengan Hukum Hess</h4>
+        <ol class="space-y-3 text-gray-700">
+         <li class="flex items-start"><span class="text-teal-500 mr-2 font-bold">1.</span> <span>Tulis reaksi yang dicari ΔH-nya</span></li>
+         <li class="flex items-start"><span class="text-teal-500 mr-2 font-bold">2.</span> <span>Atur reaksi-reaksi yang diketahui agar sesuai dengan reaksi target</span></li>
+         <li class="flex items-start"><span class="text-teal-500 mr-2 font-bold">3.</span> <span>Jika reaksi dibalik, ubah tanda ΔH</span></li>
+         <li class="flex items-start"><span class="text-teal-500 mr-2 font-bold">4.</span> <span>Jika reaksi dikalikan, kalikan juga ΔH</span></li>
+         <li class="flex items-start"><span class="text-teal-500 mr-2 font-bold">5.</span> <span>Jumlahkan semua ΔH yang telah disesuaikan</span></li>
+        </ol>
+       </div>
+       <div class="bg-white border-2 border-green-300 rounded-xl p-6">
+        <h4 class="text-xl font-bold text-gray-800 mb-4">📐 Contoh Perhitungan</h4>
+        <div class="bg-green-50 rounded-lg p-4 mb-3">
+         <p class="text-sm text-gray-700 mb-2"><strong>Diketahui:</strong></p>
+         <p class="text-sm text-gray-600 mb-1">C(s) + O₂(g) → CO₂(g) ΔH = -394 kJ</p>
+         <p class="text-sm text-gray-600 mb-1">2CO(g) + O₂(g) → 2CO₂(g) ΔH = -566 kJ</p>
+         <p class="text-sm text-gray-700 mt-3"><strong>Ditanya:</strong></p>
+         <p class="text-sm text-gray-600">ΔH untuk: 2C(s) + O₂(g) → 2CO(g)</p>
+        </div>
+        <div class="bg-teal-50 rounded-lg p-4">
+         <p class="text-sm text-gray-700 mb-2"><strong>Penyelesaian:</strong></p>
+         <p class="text-sm text-gray-600 mb-1">Reaksi 1 × 2: ΔH = -788 kJ</p>
+         <p class="text-sm text-gray-600 mb-1">Reaksi 2 dibalik: ΔH = +566 kJ</p>
+         <p class="text-sm font-bold text-teal-700 mt-2">ΔH total = -788 + 566 = -222 kJ</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-xl p-6">
+       <h4 class="font-bold text-xl mb-2">🎯 Kegunaan Hukum Hess</h4>
+       <p class="text-lg">Hukum Hess sangat berguna untuk menghitung ΔH reaksi yang sulit atau tidak bisa diukur langsung di laboratorium!</p>
+      </div>
+     </div>
+    </div><!-- Page 9: Energi Ikatan -->
+    <div class="page" id="page-9">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">🔗 Energi Ikatan</h2>
+      <div class="bg-gradient-to-r from-indigo-100 to-blue-100 rounded-xl p-6 mb-6">
+       <h3 class="text-2xl font-bold text-gray-800 mb-3">Definisi Energi Ikatan</h3>
+       <p class="text-lg text-gray-700 leading-relaxed mb-3">Energi ikatan adalah energi yang diperlukan untuk memutuskan 1 mol ikatan dalam molekul gas menjadi atom-atom gas. Sebaliknya, energi yang sama dilepaskan saat pembentukan ikatan.</p>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-red-50 rounded-lg p-4">
+         <p class="font-bold text-red-600 mb-2">⚡ Pemutusan Ikatan</p>
+         <p class="text-sm text-gray-700">Memerlukan energi (endoterm)</p>
+        </div>
+        <div class="bg-green-50 rounded-lg p-4">
+         <p class="font-bold text-green-600 mb-2">⚡ Pembentukan Ikatan</p>
+         <p class="text-sm text-gray-700">Melepaskan energi (eksoterm)</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white border-2 border-indigo-300 rounded-xl p-6 mb-6">
+       <h4 class="text-xl font-bold text-gray-800 mb-4">📐 Rumus Perhitungan</h4>
+       <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-lg p-6">
+        <p class="text-center text-2xl font-bold text-indigo-700 mb-4">ΔH = ��� Energi Ikatan Putus - Σ Energi Ikatan Bentuk</p>
+        <p class="text-center text-gray-600">ΔH = Σ E<sub>reaktan</sub> - Σ E<sub>produk</sub></p>
+       </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+       <div class="bg-white border-2 border-blue-300 rounded-xl p-6">
+        <h4 class="text-xl font-bold text-gray-800 mb-4">📊 Contoh Energi Ikatan (kJ/mol)</h4>
+        <div class="space-y-2">
+         <div class="flex justify-between bg-indigo-50 rounded p-2"><span class="text-gray-700">H-H</span> <span class="font-bold text-indigo-600">436</span>
+         </div>
+         <div class="flex justify-between bg-blue-50 rounded p-2"><span class="text-gray-700">O=O</span> <span class="font-bold text-blue-600">498</span>
+         </div>
+         <div class="flex justify-between bg-indigo-50 rounded p-2"><span class="text-gray-700">C-H</span> <span class="font-bold text-indigo-600">413</span>
+         </div>
+         <div class="flex justify-between bg-blue-50 rounded p-2"><span class="text-gray-700">C=O</span> <span class="font-bold text-blue-600">799</span>
+         </div>
+         <div class="flex justify-between bg-indigo-50 rounded p-2"><span class="text-gray-700">O-H</span> <span class="font-bold text-indigo-600">463</span>
+         </div>
+         <div class="flex justify-between bg-blue-50 rounded p-2"><span class="text-gray-700">N≡N</span> <span class="font-bold text-blue-600">945</span>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white border-2 border-indigo-300 rounded-xl p-6">
+        <h4 class="text-xl font-bold text-gray-800 mb-4">✏��� Contoh Soal</h4>
+        <div class="bg-indigo-50 rounded-lg p-4 mb-3">
+         <p class="text-sm font-semibold text-gray-800 mb-2">Reaksi:</p>
+         <p class="text-sm text-gray-700 mb-3">H₂(g) + Cl₂(g) → 2HCl(g)</p>
+         <p class="text-sm text-gray-600 mb-1">E(H-H) = 436 kJ/mol</p>
+         <p class="text-sm text-gray-600 mb-1">E(Cl-Cl) = 243 kJ/mol</p>
+         <p class="text-sm text-gray-600">E(H-Cl) = 431 kJ/mol</p>
+        </div>
+        <div class="bg-blue-50 rounded-lg p-4">
+         <p class="text-sm font-semibold text-gray-800 mb-2">Penyelesaian:</p>
+         <p class="text-sm text-gray-700 mb-1">Ikatan putus: 436 + 243 = 679 kJ</p>
+         <p class="text-sm text-gray-700 mb-1">Ikatan bentuk: 2 × 431 = 862 kJ</p>
+         <p class="text-sm font-bold text-blue-700 mt-2">ΔH = 679 - 862 = -183 kJ</p>
+         <p class="text-xs text-gray-600 mt-2">(Negatif → Reaksi eksoterm)</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-yellow-50 rounded-xl p-6 border-l-4 border-yellow-500 mb-6">
+       <h4 class="font-bold text-gray-800 mb-3 flex items-center"><span class="text-2xl mr-2">💡</span> Hal Penting tentang Energi Ikatan</h4>
+       <ul class="space-y-2 text-gray-700">
+        <li class="flex items-start"><span class="text-yellow-600 mr-2">•</span> <span>Nilai energi ikatan selalu positif (endoterm)</span></li>
+        <li class="flex items-start"><span class="text-yellow-600 mr-2">•</span> <span>Ikatan rangkap lebih kuat dari ikatan tunggal</span></li>
+        <li class="flex items-start"><span class="text-yellow-600 mr-2">•</span> <span>Semakin kuat ikatan, semakin besar energi ikatannya</span></li>
+        <li class="flex items-start"><span class="text-yellow-600 mr-2">•</span> <span>Perhatikan jumlah ikatan dalam molekul (koefisien)</span></li>
+       </ul>
+      </div>
+      <div class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white rounded-xl p-6">
+       <h4 class="font-bold text-xl mb-2">🎯 Kesimpulan</h4>
+       <p class="text-lg">Jika energi ikatan putus &gt; energi ikatan bentuk → ΔH positif (endoterm)<br>
+         Jika energi ikatan putus &lt; energi ikatan bentuk → ΔH negatif (eksoterm)</p>
+      </div>
+     </div>
+    </div><!-- Page 10: Kalorimetri -->
+    <div class="page" id="page-10">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">🌡️ Kalorimetri</h2>
+      <div class="bg-gradient-to-r from-rose-100 to-pink-100 rounded-xl p-6 mb-6">
+       <h3 class="text-2xl font-bold text-gray-800 mb-3">Apa itu Kalorimetri?</h3>
+       <p class="text-lg text-gray-700 leading-relaxed mb-3">Kalorimetri adalah ilmu yang mempelajari pengukuran kalor reaksi menggunakan alat yang disebut kalorimeter. Kalorimeter mengukur perubahan suhu yang terjadi selama reaksi berlangsung.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+       <div class="bg-white border-2 border-rose-300 rounded-xl p-6">
+        <h4 class="text-xl font-bold text-gray-800 mb-4">🧪 Jenis Kalorimeter</h4>
+        <div class="space-y-4">
+         <div class="bg-rose-50 rounded-lg p-4">
+          <h5 class="font-bold text-gray-800 mb-2 flex items-center"><span class="text-xl mr-2">���</span> Kalorimeter Sederhana</h5>
+          <p class="text-sm text-gray-600 mb-2">Menggunakan wadah terisolasi seperti gelas styrofoam</p>
+          <p class="text-xs text-gray-500">Cocok untuk reaksi dalam larutan</p>
+         </div>
+         <div class="bg-pink-50 rounded-lg p-4">
+          <h5 class="font-bold text-gray-800 mb-2 flex items-center"><span class="text-xl mr-2">🔥</span> Kalorimeter Bom</h5>
+          <p class="text-sm text-gray-600 mb-2">Untuk mengukur kalor pembakaran dengan tekanan tinggi</p>
+          <p class="text-xs text-gray-500">Lebih akurat dan presisi</p>
+         </div>
+        </div>
+       </div>
+       <div class="bg-white border-2 border-pink-300 rounded-xl p-6">
+        <h4 class="text-xl font-bold text-gray-800 mb-4">📐 Rumus Kalorimetri</h4>
+        <div class="space-y-4">
+         <div class="bg-gradient-to-r from-rose-50 to-pink-50 rounded-lg p-4">
+          <p class="font-bold text-center text-xl text-rose-700 mb-2">q = m × c × ΔT</p>
+          <div class="text-sm text-gray-600 space-y-1">
+           <p><strong>q</strong> = kalor yang diserap/dilepas (J atau kal)</p>
+           <p><strong>m</strong> = massa zat (gram)</p>
+           <p><strong>c</strong> = kalor jenis (J/g°C)</p>
+           <p><strong>ΔT</strong> = perubahan suhu (°C)</p>
+          </div>
+         </div>
+         <div class="bg-blue-50 rounded-lg p-3">
+          <p class="text-sm text-gray-700 text-center"><strong>Kalor jenis air:</strong> 4,18 J/g°C atau 1 kal/g°C</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white border-2 border-rose-300 rounded-xl p-6 mb-6">
+       <h4 class="text-xl font-bold text-gray-800 mb-4">���️ Contoh Perhitungan</h4>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-rose-50 rounded-lg p-4">
+         <p class="font-semibold text-gray-800 mb-3">Soal:</p>
+         <p class="text-sm text-gray-700 mb-2">Sebanyak 100 mL larutan HCl 1 M direaksikan dengan 100 mL larutan NaOH 1 M dalam kalorimeter. Suhu awal kedua larutan 25°C dan suhu akhir campuran 32°C. Jika kalor jenis larutan = 4,18 J/g°C dan massa jenis larutan = 1 g/mL, hitunglah ΔH netralisasi!</p>
+        </div>
+        <div class="bg-pink-50 rounded-lg p-4">
+         <p class="font-semibold text-gray-800 mb-3">Penyelesaian:</p>
+         <div class="text-sm text-gray-700 space-y-1">
+          <p>Volume total = 200 mL</p>
+          <p>Massa larutan = 200 g</p>
+          <p>ΔT = 32 - 25 = 7°C</p>
+          <p>q = 200 × 4,18 × 7 = 5.852 J</p>
+          <p>mol HCl = 0,1 × 1 = 0,1 mol</p>
+          <p classname="font-bold text-pink-700 mt-2">ΔH = -5.852/0,1 = -58,52 kJ/mol</p>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="bg-yellow-50 rounded-xl p-6 border-l-4 border-yellow-500 mb-6">
+       <h4 class="font-bold text-gray-800 mb-3 flex items-center"><span class="text-2xl mr-2">⚠️</span> Hal yang Perlu Diperhatikan</h4>
+       <ul class="space-y-2 text-gray-700">
+        <li class="flex items-start"><span class="text-yellow-600 mr-2">•</span> <span>Asumsi: kalor yang diserap/dilepas sistem = kalor yang diterima/dilepas air</span></li>
+        <li class="flex items-start"><span class="text-yellow-600 mr-2">•</span> <span>Tanda q positif: sistem menyerap kalor (endoterm)</span></li>
+        <li class="flex items-start"><span class="text-yellow-600 mr-2">•</span> <span>Tanda q negatif: sistem melepas kalor (eksoterm)</span></li>
+        <li class="flex items-start"><span class="text-yellow-600 mr-2">•</span> <span>ΔH = -q/n (n = jumlah mol pereaksi pembatas)</span></li>
+       </ul>
+      </div>
+      <div class="bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-xl p-6">
+       <h4 class="font-bold text-xl mb-2">🎯 Aplikasi Kalorimetri</h4>
+       <p class="text-lg">Kalorimetri digunakan untuk menentukan nilai kalori makanan, mengukur kalor reaksi, dan menghitung energi dalam berbagai proses kimia!</p>
+      </div>
+     </div>
+    </div><!-- Page 11: Virtual Laboratory - Reaksi Eksoterm & Endoterm -->
+    <div class="page" id="page-11">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">🧪 Virtual Laboratory: Reaksi Eksoterm &amp; Endoterm</h2>
+      <div class="bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl p-6 mb-6">
+       <p class="text-lg text-gray-700 text-center">Pilih jenis reaksi dan amati perubahan suhu yang terjadi!</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6"><button onclick="simulateReaction('eksoterm')" class="interactive-element bg-gradient-to-br from-red-400 to-orange-400 text-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+        <div class="text-5xl mb-3 flame">
+         🔥
+        </div><h3 class="text-2xl font-bold mb-2">Reaksi Eksoterm</h3><p class="text-sm">Klik untuk simulasi</p></button> <button onclick="simulateReaction('endoterm')" class="interactive-element bg-gradient-to-br from-blue-400 to-cyan-400 text-white rounded-xl p-6 shadow-lg hover:shadow-2xl">
+        <div class="text-5xl mb-3 ice">
+         ❄️
+        </div><h3 class="text-2xl font-bold mb-2">Reaksi Endoterm</h3><p class="text-sm">Klik untuk simulasi</p></button>
+      </div>
+      <div id="lab-result" class="hidden">
+       <div class="bg-white border-2 border-gray-300 rounded-xl p-6 mb-6">
+        <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Hasil Simulasi</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+         <div class="bg-gray-50 rounded-lg p-6">
+          <h4 class="font-bold text-gray-800 mb-4 text-center">🌡️ Termometer</h4>
+          <div class="bg-white rounded-lg p-4 border-4 border-gray-300">
+           <div class="text-center">
+            <p class="text-sm text-gray-600 mb-2">Suhu Awal: <span class="font-bold">25°C</span></p>
+            <div class="relative h-48 w-16 mx-auto bg-gray-200 rounded-full overflow-hidden">
+             <div id="mercury" class="absolute bottom-0 w-full bg-red-500 transition-all duration-2000" style="height: 50%"></div>
+            </div>
+            <p class="text-sm text-gray-600 mt-2">Suhu Akhir: <span id="final-temp" class="font-bold text-xl"></span></p>
+           </div>
+          </div>
+         </div>
+         <div class="bg-gray-50 rounded-lg p-6">
+          <h4 class="font-bold text-gray-800 mb-4 text-center">📊 Data Pengamatan</h4>
+          <div id="observation-data" class="space-y-3"></div>
+         </div>
+        </div>
+       </div>
+       <div class="bg-green-50 rounded-xl p-6 border-l-4 border-green-500">
+        <h4 class="font-bold text-gray-800 mb-2">�� Kesimpulan</h4>
+        <p id="conclusion-text" class="text-gray-700"></p>
+       </div>
+      </div>
+     </div>
+    </div><!-- Page 12: Virtual Laboratory - Kalorimetri -->
+    <div class="page" id="page-12">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">🧪 Virtual Laboratory: Kalorimetri</h2>
+      <div class="bg-gradient-to-r from-rose-100 to-pink-100 rounded-xl p-6 mb-6">
+       <p class="text-lg text-gray-700 text-center">Lakukan percobaan kalorimetri dan hitung kalor reaksi!</p>
+      </div>
+      <div class="bg-white border-2 border-rose-300 rounded-xl p-6 mb-6">
+       <h3 class="text-xl font-bold text-gray-800 mb-4">��️ Pengaturan Percobaan</h3>
+       <div class="grid md:grid-cols-2 gap-6">
+        <div><label class="block text-gray-700 font-semibold mb-2">Volume Larutan (mL):</label> <input type="number" id="volume-input" value="100" min="50" max="500" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg">
+        </div>
+        <div><label class="block text-gray-700 font-semibold mb-2">Konsentrasi (M):</label> <input type="number" id="conc-input" value="1" min="0.1" max="5" step="0.1" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg">
+        </div>
+       </div><button onclick="runCalorimetry()" class="w-full mt-4 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold py-3 rounded-lg hover:shadow-lg transition-all"> 🔬 Jalankan Percobaan </button>
+      </div>
+      <div id="calorimetry-result" class="hidden">
+       <div class="bg-white border-2 border-gray-300 rounded-xl p-6 mb-6">
+        <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">📊 Hasil Pengukuran</h3>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+         <div class="bg-blue-50 rounded-lg p-4 text-center">
+          <p class="text-sm text-gray-600 mb-1">Suhu Awal</p>
+          <p id="cal-temp-awal" class="text-2xl font-bold text-blue-600"></p>
+         </div>
+         <div class="bg-red-50 rounded-lg p-4 text-center">
+          <p class="text-sm text-gray-600 mb-1">Suhu Akhir</p>
+          <p id="cal-temp-akhir" class="text-2xl font-bold text-red-600"></p>
+         </div>
+         <div class="bg-green-50 rounded-lg p-4 text-center">
+          <p class="text-sm text-gray-600 mb-1">Perubahan Suhu</p>
+          <p id="cal-delta-t" class="text-2xl font-bold text-green-600"></p>
+         </div>
+        </div>
+        <div class="bg-gradient-to-r from-rose-50 to-pink-50 rounded-lg p-6">
+         <h4 class="font-bold text-gray-800 mb-3">🧮 Perhitungan:</h4>
+         <div id="calculation-steps" class="space-y-2 text-gray-700"></div>
+         <div class="mt-4 bg-white rounded-lg p-4 border-2 border-rose-300">
+          <p class="text-center text-xl font-bold text-rose-600">ΔH = <span id="final-enthalpy"></span></p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Page 13: Video Interaktif -->
+    <div class="page" id="page-13">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">🎥 Video Interaktif: Termokimia</h2>
+      <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl p-6 mb-6">
+       <p class="text-lg text-gray-700 text-center">Tonton penjelasan konsep dan jawab pertanyaan reflektif untuk menguji pemahaman!</p>
+      </div>
+      <div class="bg-gray-800 rounded-xl overflow-hidden mb-6">
+       <div class="aspect-video bg-gradient-to-br from-purple-900 to-blue-900 flex items-center justify-center">
+        <div class="text-center text-white">
+         <div class="text-6xl mb-4">
+          ▶️
+         </div>
+         <h3 class="text-2xl font-bold mb-2">Termokimia dalam Kehidupan</h3>
+         <p class="text-sm opacity-80">Video pembelajaran konsep termokimia</p>
+        </div>
+       </div>
+      </div>
+      <div class="space-y-6">
+       <div class="bg-white border-2 border-purple-300 rounded-xl p-6">
+        <h4 class="text-xl font-bold text-gray-800 mb-4">💭 Pertanyaan Reflektif 1</h4>
+        <p class="text-gray-700 mb-4">Mengapa saat kamu mencampurkan air panas dan air dingin, suhu campuran menjadi hangat (tidak sepanas air panas awal)?</p><textarea id="reflection-1" rows="3" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg resize-none" placeholder="Tuliskan refleksi Anda..."></textarea> <button onclick="saveReflection(1)" class="mt-3 bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 transition-all"> 💾 Simpan Refleksi </button>
+       </div>
+       <div class="bg-white border-2 border-pink-300 rounded-xl p-6">
+        <h4 class="text-xl font-bold text-gray-800 mb-4">💭 Pertanyaan Reflektif 2</h4>
+        <p class="text-gray-700 mb-4">Jelaskan mengapa kompor gas dapat menghasilkan panas untuk memasak makanan ditinjau dari konsep termokimia!</p><textarea id="reflection-2" rows="3" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg resize-none" placeholder="Tuliskan refleksi Anda..."></textarea> <button onclick="saveReflection(2)" class="mt-3 bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition-all"> 💾 Simpan Refleksi </button>
+       </div>
+       <div class="bg-white border-2 border-blue-300 rounded-xl p-6">
+        <h4 class="text-xl font-bold text-gray-800 mb-4">💭 Pertanyaan Reflektif 3</h4>
+        <p class="text-gray-700 mb-4">Mengapa kantong es instan menjadi dingin saat diaktifkan tanpa menggunakan lemari es?</p><textarea id="reflection-3" rows="3" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg resize-none" placeholder="Tuliskan refleksi Anda..."></textarea> <button onclick="saveReflection(3)" class="mt-3 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-all"> 💾 Simpan Refleksi </button>
+       </div>
+      </div>
+      <div id="reflection-feedback" class="hidden mt-6 bg-green-50 rounded-xl p-6 border-l-4 border-green-500">
+       <h4 class="font-bold text-gray-800 mb-2 flex items-center"><span class="text-xl mr-2">✅</span> Refleksi Tersimpan!</h4>
+       <p class="text-gray-700">Bagus! Terus tingkatkan pemahaman Anda tentang termokimia.</p>
+      </div>
+     </div>
+    </div><!-- Page 14: Aplikasi dalam Kehidupan -->
+    <div class="page" id="page-14">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">🌍 Termokimia dalam Kehidupan Sehari-hari</h2>
+      <div class="bg-gradient-to-r from-green-100 to-teal-100 rounded-xl p-6 mb-6">
+       <p class="text-lg text-gray-700 text-center">Termokimia ada di sekitar kita! Mari jelajahi fenomena termokimia dalam kehidupan sehari-hari.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+       <div class="bg-white border-2 border-red-300 rounded-xl p-6 card-hover">
+        <div class="text-5xl mb-3 text-center">
+         🔥
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Pembakaran Bahan Bakar</h3>
+        <p class="text-gray-700 mb-3">Saat kendaraan bermotor beroperasi, bahan bakar (bensin/solar) bereaksi dengan oksigen menghasilkan energi yang menggerakkan mesin.</p>
+        <div class="bg-red-50 rounded-lg p-3">
+         <p class="text-sm text-gray-600"><strong>Reaksi Eksoterm:</strong> Melepaskan energi untuk gerakan dan panas</p>
+        </div>
+       </div>
+       <div class="bg-white border-2 border-green-300 rounded-xl p-6 card-hover">
+        <div class="text-5xl mb-3 text-center">
+         🌿
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Fotosintesis Tumbuhan</h3>
+        <p class="text-gray-700 mb-3">Tumbuhan menggunakan energi matahari untuk mengubah CO₂ dan H₂O menjadi glukosa, menyimpan energi dalam bentuk kimia.</p>
+        <div class="bg-green-50 rounded-lg p-3">
+         <p class="text-sm text-gray-600"><strong>Reaksi Endoterm:</strong> Menyerap energi cahaya matahari</p>
+        </div>
+       </div>
+       <div class="bg-white border-2 border-orange-300 rounded-xl p-6 card-hover">
+        <div class="text-5xl mb-3 text-center">
+         🍲
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Memasak Makanan</h3>
+        <p class="text-gray-700 mb-3">Proses memasak menggunakan energi panas dari kompor untuk mengubah bahan mentah menjadi matang melalui reaksi kimia.</p>
+        <div class="bg-orange-50 rounded-lg p-3">
+         <p class="text-sm text-gray-600"><strong>Reaksi Eksoterm &amp; Endoterm:</strong> Bergantung pada jenis masakan</p>
+        </div>
+       </div>
+       <div class="bg-white border-2 border-blue-300 rounded-xl p-6 card-hover">
+        <div class="text-5xl mb-3 text-center">
+         ❄️
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Kantong Es Instan</h3>
+        <p class="text-gray-700 mb-3">Kantong es instan menggunakan reaksi pelarutan amonium nitrat yang menyerap kalor, membuat kantong terasa dingin.</p>
+        <div class="bg-blue-50 rounded-lg p-3">
+         <p class="text-sm text-gray-600"><strong>Reaksi Endoterm:</strong> Menyerap kalor dari lingkungan</p>
+        </div>
+       </div>
+       <div class="bg-white border-2 border-purple-300 rounded-xl p-6 card-hover">
+        <div class="text-5xl mb-3 text-center">
+         💪
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Respirasi Seluler</h3>
+        <p class="text-gray-700 mb-3">Tubuh kita menguraikan glukosa untuk menghasilkan energi (ATP) yang diperlukan untuk beraktivitas sehari-hari.</p>
+        <div class="bg-purple-50 rounded-lg p-3">
+         <p class="text-sm text-gray-600"><strong>Reaksi Eksoterm:</strong> Melepaskan energi untuk metabolisme</p>
+        </div>
+       </div>
+       <div class="bg-white border-2 border-yellow-300 rounded-xl p-6 card-hover">
+        <div class="text-5xl mb-3 text-center">
+         🧊
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Pembuatan Es Batu</h3>
+        <p class="text-gray-700 mb-3">Air cair melepaskan energi ke lingkungan (freezer) saat membeku menjadi es, meskipun prosesnya membutuhkan pendinginan.</p>
+        <div class="bg-yellow-50 rounded-lg p-3">
+         <p class="text-sm text-gray-600"><strong>Reaksi Eksoterm:</strong> Air melepas kalor saat membeku</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-xl p-6">
+       <h4 class="font-bold text-xl mb-2">💡 Kesimpulan</h4>
+       <p class="text-lg">Termokimia adalah bagian integral dari kehidupan kita. Memahami konsep ini membantu kita menjelaskan dan memanfaatkan fenomena energi di sekitar kita!</p>
+      </div>
+     </div>
+    </div><!-- Page 15: Latihan Soal -->
+    <div class="page" id="page-15">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6">📝 Latihan Soal Interaktif</h2>
+      <div class="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-xl p-6 mb-6">
+       <p class="text-lg text-gray-700 text-center">Uji pemahaman Anda dengan soal-soal berikut. Pilih jawaban yang tepat!</p>
+      </div>
+      <div id="quiz-container" class="space-y-6"></div>
+      <div id="quiz-result" class="hidden mt-6 bg-white border-2 border-gray-300 rounded-xl p-6">
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">📊 Hasil Evaluasi</h3>
+       <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-green-50 rounded-lg p-6 text-center">
+         <p class="text-sm text-gray-600 mb-2">Jawaban Benar</p>
+         <p id="correct-count" class="text-4xl font-bold text-green-600"></p>
+        </div>
+        <div class="bg-red-50 rounded-lg p-6 text-center">
+         <p class="text-sm text-gray-600 mb-2">Jawaban Salah</p>
+         <p id="incorrect-count" class="text-4xl font-bold text-red-600"></p>
+        </div>
+       </div>
+       <div class="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg p-6 text-center">
+        <p class="text-lg mb-2">Skor Anda:</p>
+        <p id="final-score" class="text-5xl font-bold"></p>
+       </div>
+       <div id="feedback-message" class="mt-6 rounded-lg p-4 text-center font-semibold"></div>
+      </div>
+     </div>
+    </div><!-- Page 16: Rangkuman & Penutup -->
+    <div class="page" id="page-16">
+     <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+      <h2 class="text-4xl font-bold text-gray-800 mb-6 text-center">🎓 Rangkuman Materi Termokimia</h2>
+      <div class="bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl p-6 mb-6">
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">��� Konsep Utama yang Telah Dipelajari</h3>
+      </div>
+      <div class="space-y-4 mb-6">
+       <div class="bg-white border-2 border-blue-300 rounded-xl p-6 card-hover">
+        <h4 class="text-xl font-bold text-gray-800 mb-2 flex items-center"><span class="text-2xl mr-3">1️⃣</span> Konsep Dasar Termokimia</h4>
+        <p class="text-gray-700 ml-10">Termokimia mempelajari perubahan energi dalam reaksi kimia. Sistem adalah fokus pengamatan, lingkungan adalah di luar sistem.</p>
+       </div>
+       <div class="bg-white border-2 border-red-300 rounded-xl p-6 card-hover">
+        <h4 class="text-xl font-bold text-gray-800 mb-2 flex items-center"><span class="text-2xl mr-3">2️⃣</span> Reaksi Eksoterm &amp; Endoterm</h4>
+        <p class="text-gray-700 ml-10">Eksoterm (ΔH &lt; 0) melepaskan kalor, suhu lingkungan naik. Endoterm (ΔH &gt; 0) menyerap kalor, suhu lingkungan turun.</p>
+       </div>
+       <div class="bg-white border-2 border-purple-300 rounded-xl p-6 card-hover">
+        <h4 class="text-xl font-bold text-gray-800 mb-2 flex items-center"><span class="text-2xl mr-3">3️⃣</span> Entalpi dan Persamaan Termokimia</h4>
+        <p class="text-gray-700 ml-10">ΔH = H<sub>produk</sub> - H<sub>reaktan</sub>. Persamaan termokimia menyertakan nilai ΔH dan wujud zat.</p>
+       </div>
+       <div class="bg-white border-2 border-green-300 rounded-xl p-6 card-hover">
+        <h4 class="text-xl font-bold text-gray-800 mb-2 flex items-center"><span class="text-2xl mr-3">4️⃣</span> Hukum Hess</h4>
+        <p class="text-gray-700 ml-10">ΔH reaksi tidak bergantung jalur, hanya keadaan awal dan akhir. Berguna untuk menghitung ΔH reaksi sulit diukur.</p>
+       </div>
+       <div class="bg-white border-2 border-indigo-300 rounded-xl p-6 card-hover">
+        <h4 class="text-xl font-bold text-gray-800 mb-2 flex items-center"><span class="text-2xl mr-3">5️⃣</span> Energi Ikatan</h4>
+        <p class="text-gray-700 ml-10">ΔH = Σ Energi Ikatan Putus - Σ Energi Ikatan Bentuk. Pemutusan ikatan butuh energi, pembentukan melepas energi.</p>
+       </div>
+       <div class="bg-white border-2 border-rose-300 rounded-xl p-6 card-hover">
+        <h4 class="text-xl font-bold text-gray-800 mb-2 flex items-center"><span class="text-2xl mr-3">6️⃣</span> Kalorimetri</h4>
+        <p class="text-gray-700 ml-10">Pengukuran kalor menggunakan kalorimeter. Rumus: q = m × c × ΔT. Untuk menghitung ΔH: ΔH = -q/n.</p>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6 mb-6 border-l-4 border-yellow-500">
+       <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">🎯 Rumus-Rumus Penting</h3>
+       <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-lg p-4 text-center">
+         <p class="font-bold text-gray-800">ΔH = H<sub>produk</sub> - H<sub>reaktan</sub></p>
+        </div>
+        <div class="bg-white rounded-lg p-4 text-center">
+         <p class="font-bold text-gray-800">q = m × c × ΔT</p>
+        </div>
+        <div class="bg-white rounded-lg p-4 text-center">
+         <p class="font-bold text-gray-800">ΔH = ΣE<sub>putus</sub> - ΣE<sub>bentuk</sub></p>
+        </div>
+        <div class="bg-white rounded-lg p-4 text-center">
+         <p class="font-bold text-gray-800">ΔH = -q/n</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-xl p-6 mb-6 border-l-4 border-green-500">
+       <h3 class="text-xl font-bold text-gray-800 mb-4">💡 Refleksi Pembelajaran</h3>
+       <div class="space-y-3">
+        <div class="flex items-start"><span class="text-green-600 text-xl mr-3">✓</span>
+         <p class="text-gray-700">Saya memahami perbedaan reaksi eksoterm dan endoterm</p>
+        </div>
+        <div class="flex items-start"><span class="text-green-600 text-xl mr-3">✓</span>
+         <p class="text-gray-700">Saya dapat menghitung ΔH menggunakan berbagai metode</p>
+        </div>
+        <div class="flex items-start"><span class="text-green-600 text-xl mr-3">✓</span>
+         <p class="text-gray-700">Saya mengenali aplikasi termokimia dalam kehidupan sehari-hari</p>
+        </div>
+        <div class="flex items-start"><span class="text-green-600 text-xl mr-3">✓</span>
+         <p class="text-gray-700">Saya siap menerapkan konsep termokimia dalam pemecahan masalah</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-2xl p-8 text-center">
+       <h3 class="text-3xl font-bold mb-4">🎉 Selamat!</h3>
+       <p class="text-xl mb-4">Anda telah menyelesaikan modul pembelajaran Termokimia!</p>
+       <p class="text-lg">Terus kembangkan pemahaman Anda dan terapkan konsep termokimia dalam kehidupan sehari-hari. Semangat belajar! 🚀</p>
+      </div>
+     </div>
+    </div><!-- Navigation Buttons -->
+    <div class="flex justify-between items-center mt-8"><button id="prev-btn" onclick="previousPage()" class="hidden bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all"> ← Previous </button> <button id="next-btn" onclick="nextPage()" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold py-3 px-8 rounded-lg transition-all ml-auto"> <span id="next-button-text">Next Page ���</span> </button>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      site_title: "Termokimia: Energi dalam Reaksi Kimia",
+      welcome_text: "Selamat datang di modul pembelajaran interaktif tentang Termokimia. Mari jelajahi dunia energi dalam reaksi kimia dengan cara yang menyenangkan!",
+      button_text: "Next Page"
+    };
+    
+    let currentPage = 1;
+    const totalPages = 16;
+    let quizAnswers = [];
+    
+    const quizData = [
+      {
+        question: "Reaksi yang melepaskan kalor ke lingkungan disebut...",
+        options: ["Reaksi endoterm", "Reaksi eksoterm", "Reaksi netral", "Reaksi isoterm"],
+        correct: 1,
+        explanation: "Reaksi eksoterm melepaskan energi (kalor) ke lingkungan, ditandai dengan ΔH < 0 dan suhu lingkungan meningkat."
+      },
+      {
+        question: "Nilai ��H untuk reaksi endoterm adalah...",
+        options: ["Negatif", "Positif", "Nol", "Tidak tentu"],
+        correct: 1,
+        explanation: "Reaksi endoterm menyerap energi dari lingkungan, sehingga ΔH bernilai positif (ΔH > 0)."
+      },
+      {
+        question: "Hukum Hess menyatakan bahwa perubahan entalpi bergantung pada...",
+        options: ["Jalur reaksi", "Waktu reaksi", "Keadaan awal dan akhir", "Jumlah tahap reaksi"],
+        correct: 2,
+        explanation: "Hukum Hess menyatakan bahwa ΔH hanya bergantung pada keadaan awal dan keadaan akhir, tidak bergantung pada jalur reaksi."
+      },
+      {
+        question: "Dalam perhitungan energi ikatan, jika energi ikatan yang putus lebih besar dari energi ikatan yang terbentuk, maka reaksi...",
+        options: ["Eksoterm", "Endoterm", "Netral", "Reversibel"],
+        correct: 1,
+        explanation: "Jika energi ikatan putus > energi ikatan bentuk, berarti diperlukan lebih banyak energi untuk memutus ikatan, sehingga reaksi bersifat endoterm (ΔH > 0)."
+      },
+      {
+        question: "Rumus untuk menghitung kalor dalam kalorimetri adalah...",
+        options: ["q = m × c", "q = m × ΔT", "q = c × ΔT", "q = m × c × ΔT"],
+        correct: 3,
+        explanation: "Rumus kalorimetri adalah q = m × c × ΔT, di mana q = kalor, m = massa, c = kalor jenis, dan ΔT = perubahan suhu."
+      },
+      {
+        question: "Fotosintesis merupakan contoh reaksi...",
+        options: ["Eksoterm", "Endoterm", "Netralisasi", "Pembakaran"],
+        correct: 1,
+        explanation: "Fotosintesis adalah reaksi endoterm karena menyerap energi cahaya matahari untuk membentuk glukosa dari CO��� dan H₂O."
+      },
+      {
+        question: "Dalam persamaan termokimia, wujud zat dituliskan dengan notasi...",
+        options: ["[], {}, ()", "(s), (l), (g), (aq)", "solid, liquid, gas", "Tidak perlu dituliskan"],
+        correct: 1,
+        explanation: "Wujud zat dalam persamaan termokimia ditulis dengan notasi: (s) = padat, (l) = cair, (g) = gas, (aq) = larutan."
+      },
+      {
+        question: "Pembakaran bensin dalam mesin kendaraan merupakan reaksi...",
+        options: ["Endoterm, karena memerlukan energi", "Eksoterm, karena melepaskan energi", "Netral, karena tidak ada perubahan energi", "Isoterm, karena suhu tetap"],
+        correct: 1,
+        explanation: "Pembakaran bensin adalah reaksi eksoterm yang melepaskan energi untuk menggerakkan mesin kendaraan."
+      }
+    ];
+    
+    function updateProgress() {
+      const progress = (currentPage / totalPages) * 100;
+      const progressBar = document.getElementById('progress-bar');
+      const progressText = document.getElementById('progress-text');
+      
+      if (progressBar && progressText) {
+        progressBar.style.width = progress + '%';
+        progressText.textContent = currentPage + '/' + totalPages;
+      }
+    }
+    
+    function showPage(pageNum) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
+      
+      const targetPage = document.getElementById('page-' + pageNum);
+      if (targetPage) {
+        targetPage.classList.add('active');
+      }
+      
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const nextBtnText = document.getElementById('next-button-text');
+      
+      if (prevBtn) {
+        if (pageNum > 1) {
+          prevBtn.classList.remove('hidden');
+        } else {
+          prevBtn.classList.add('hidden');
+        }
+      }
+      
+      if (nextBtn && nextBtnText) {
+        if (pageNum === totalPages) {
+          nextBtnText.textContent = '🎉 Selesai';
+        } else {
+          const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+          nextBtnText.textContent = (config.button_text || defaultConfig.button_text) + ' →';
+        }
+      }
+      
+      if (pageNum === 14 && quizAnswers.length === 0) {
+        initializeQuiz();
+      }
+      
+      updateProgress();
+      window.scrollTo(0, 0);
+    }
+    
+    function nextPage() {
+      if (currentPage < totalPages) {
+        currentPage++;
+        showPage(currentPage);
+      } else {
+        const completionMessage = document.createElement('div');
+        completionMessage.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        completionMessage.innerHTML = `
+          <div class="bg-white rounded-2xl p-8 max-w-md text-center shadow-2xl">
+            <div class="text-6xl mb-4">🎉</div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-3">Pembelajaran Selesai!</h3>
+            <p class="text-gray-600 mb-6">Terima kasih telah menyelesaikan modul Termokimia. Semoga bermanfaat!</p>
+            <button onclick="this.parentElement.parentElement.remove()" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all">
+              Tutup
+            </button>
+          </div>
+        `;
+        document.body.appendChild(completionMessage);
+      }
+    }
+    
+    function previousPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        showPage(currentPage);
+      }
+    }
+    
+    function simulateReaction(type) {
+      const labResult = document.getElementById('lab-result');
+      const mercury = document.getElementById('mercury');
+      const finalTemp = document.getElementById('final-temp');
+      const observationData = document.getElementById('observation-data');
+      const conclusionText = document.getElementById('conclusion-text');
+      
+      if (!labResult || !mercury || !finalTemp || !observationData || !conclusionText) return;
+      
+      labResult.classList.remove('hidden');
+      
+      if (type === 'eksoterm') {
+        mercury.style.height = '80%';
+        mercury.style.backgroundColor = '#ef4444';
+        finalTemp.textContent = '45°C';
+        finalTemp.className = 'font-bold text-xl text-red-600';
+        
+        observationData.innerHTML = `
+          <div class="bg-red-50 rounded-lg p-3">
+            <p class="font-semibold text-gray-800">Jenis Reaksi: Eksoterm 🔥</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-gray-200">
+            <p class="text-sm text-gray-700"><strong>Perubahan Suhu:</strong> Naik dari 25°C ke 45°C</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-gray-200">
+            <p class="text-sm text-gray-700"><strong>Perubahan Entalpi:</strong> ΔH < 0 (negatif)</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-gray-200">
+            <p class="text-sm text-gray-700"><strong>Pengamatan:</strong> Wadah terasa panas saat dipegang</p>
+          </div>
+        `;
+        
+        conclusionText.textContent = 'Reaksi eksoterm melepaskan energi ke lingkungan, menyebabkan suhu lingkungan meningkat. Contoh: pembakaran, respirasi, netralisasi asam-basa.';
+      } else {
+        mercury.style.height = '20%';
+        mercury.style.backgroundColor = '#3b82f6';
+        finalTemp.textContent = '10°C';
+        finalTemp.className = 'font-bold text-xl text-blue-600';
+        
+        observationData.innerHTML = `
+          <div class="bg-blue-50 rounded-lg p-3">
+            <p class="font-semibold text-gray-800">Jenis Reaksi: Endoterm ❄️</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-gray-200">
+            <p class="text-sm text-gray-700"><strong>Perubahan Suhu:</strong> Turun dari 25°C ke 10°C</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-gray-200">
+            <p class="text-sm text-gray-700"><strong>Perubahan Entalpi:</strong> ΔH > 0 (positif)</p>
+          </div>
+          <div class="bg-white rounded-lg p-3 border border-gray-200">
+            <p class="text-sm text-gray-700"><strong>Pengamatan:</strong> Wadah terasa dingin saat dipegang</p>
+          </div>
+        `;
+        
+        conclusionText.textContent = 'Reaksi endoterm menyerap energi dari lingkungan, menyebabkan suhu lingkungan menurun. Contoh: fotosintesis, pelelehan es, penguapan air.';
+      }
+      
+      setTimeout(() => {
+        labResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+    }
+    
+    function runCalorimetry() {
+      const volumeInput = document.getElementById('volume-input');
+      const concInput = document.getElementById('conc-input');
+      const resultDiv = document.getElementById('calorimetry-result');
+      
+      if (!volumeInput || !concInput || !resultDiv) return;
+      
+      const volume = parseFloat(volumeInput.value) || 100;
+      const concentration = parseFloat(concInput.value) || 1;
+      
+      const tempAwal = 25;
+      const tempAkhir = 32;
+      const deltaT = tempAkhir - tempAwal;
+      const mass = volume * 2;
+      const specificHeat = 4.18;
+      const q = mass * specificHeat * deltaT;
+      const mol = (volume / 1000) * concentration;
+      const deltaH = -(q / mol).toFixed(2);
+      
+      const calTempAwal = document.getElementById('cal-temp-awal');
+      const calTempAkhir = document.getElementById('cal-temp-akhir');
+      const calDeltaT = document.getElementById('cal-delta-t');
+      const calculationSteps = document.getElementById('calculation-steps');
+      const finalEnthalpy = document.getElementById('final-enthalpy');
+      
+      if (calTempAwal) calTempAwal.textContent = tempAwal + '°C';
+      if (calTempAkhir) calTempAkhir.textContent = tempAkhir + '°C';
+      if (calDeltaT) calDeltaT.textContent = deltaT + '°C';
+      
+      if (calculationSteps) {
+        calculationSteps.innerHTML = `
+          <p>Volume total = ${volume} mL × 2 = ${volume * 2} mL</p>
+          <p>Massa larutan = ${mass} g (asumsi ρ = 1 g/mL)</p>
+          <p>ΔT = ${tempAkhir} - ${tempAwal} = ${deltaT}°C</p>
+          <p>q = m × c × ΔT = ${mass} × ${specificHeat} × ${deltaT} = ${q.toFixed(2)} J</p>
+          <p>mol = ${volume/1000} L × ${concentration} M = ${mol} mol</p>
+        `;
+      }
+      
+      if (finalEnthalpy) {
+        finalEnthalpy.textContent = deltaH + ' kJ/mol';
+      }
+      
+      resultDiv.classList.remove('hidden');
+      
+      setTimeout(() => {
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+    }
+    
+    function saveReflection(num) {
+      const textarea = document.getElementById('reflection-' + num);
+      const feedback = document.getElementById('reflection-feedback');
+      
+      if (!textarea || !feedback) return;
+      
+      if (textarea.value.trim() === '') {
+        const tempMessage = document.createElement('div');
+        tempMessage.className = 'mt-3 bg-yellow-50 rounded-lg p-3 border-l-4 border-yellow-500';
+        tempMessage.innerHTML = '<p class="text-sm text-gray-700">Silakan tulis refleksi Anda terlebih dahulu.</p>';
+        textarea.parentElement.appendChild(tempMessage);
+        setTimeout(() => tempMessage.remove(), 3000);
+        return;
+      }
+      
+      feedback.classList.remove('hidden');
+      
+      setTimeout(() => {
+        feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+      
+      setTimeout(() => {
+        feedback.classList.add('hidden');
+      }, 3000);
+    }
+    
+    function initializeQuiz() {
+      const container = document.getElementById('quiz-container');
+      if (!container) return;
+      
+      quizAnswers = new Array(quizData.length).fill(null);
+      
+      container.innerHTML = '';
+      
+      quizData.forEach((quiz, index) => {
+        const quizCard = document.createElement('div');
+        quizCard.className = 'bg-white border-2 border-gray-300 rounded-xl p-6';
+        
+        let optionsHTML = '';
+        quiz.options.forEach((option, optIndex) => {
+          optionsHTML += `
+            <button onclick="selectAnswer(${index}, ${optIndex})" 
+                    class="quiz-option quiz-option-${index}-${optIndex} w-full text-left bg-gray-50 hover:bg-gray-100 border-2 border-gray-300 rounded-lg p-4 transition-all">
+              ${String.fromCharCode(65 + optIndex)}. ${option}
+            </button>
+          `;
+        });
+        
+        quizCard.innerHTML = `
+          <h4 class="text-lg font-bold text-gray-800 mb-4">Soal ${index + 1}</h4>
+          <p class="text-gray-700 mb-4">${quiz.question}</p>
+          <div class="space-y-2">
+            ${optionsHTML}
+          </div>
+          <div id="explanation-${index}" class="hidden mt-4 bg-blue-50 rounded-lg p-4 border-l-4 border-blue-500">
+            <p class="text-sm text-gray-700"></p>
+          </div>
+        `;
+        
+        container.appendChild(quizCard);
+      });
+      
+      const submitButton = document.createElement('button');
+      submitButton.onclick = submitQuiz;
+      submitButton.className = 'w-full mt-6 bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold py-4 rounded-lg hover:shadow-lg transition-all';
+      submitButton.textContent = '✅ Submit Jawaban';
+      container.appendChild(submitButton);
+    }
+    
+    function selectAnswer(questionIndex, optionIndex) {
+      quizAnswers[questionIndex] = optionIndex;
+      
+      for (let i = 0; i < quizData[questionIndex].options.length; i++) {
+        const option = document.querySelector('.quiz-option-' + questionIndex + '-' + i);
+        if (option) {
+          option.classList.remove('border-blue-500', 'bg-blue-100');
+        }
+      }
+      
+      const selectedOption = document.querySelector('.quiz-option-' + questionIndex + '-' + optionIndex);
+      if (selectedOption) {
+        selectedOption.classList.add('border-blue-500', 'bg-blue-100');
+      }
+    }
+    
+    function submitQuiz() {
+      if (quizAnswers.includes(null)) {
+        const tempMessage = document.createElement('div');
+        tempMessage.className = 'fixed top-4 right-4 bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+        tempMessage.textContent = '⚠️ Harap jawab semua soal terlebih dahulu!';
+        document.body.appendChild(tempMessage);
+        setTimeout(() => tempMessage.remove(), 3000);
+        return;
+      }
+      
+      let correctCount = 0;
+      
+      quizData.forEach((quiz, index) => {
+        const userAnswer = quizAnswers[index];
+        const isCorrect = userAnswer === quiz.correct;
+        
+        if (isCorrect) correctCount++;
+        
+        quiz.options.forEach((option, optIndex) => {
+          const optionBtn = document.querySelector('.quiz-option-' + index + '-' + optIndex);
+          if (!optionBtn) return;
+          
+          optionBtn.style.pointerEvents = 'none';
+          
+          if (optIndex === quiz.correct) {
+            optionBtn.classList.add('correct');
+          } else if (optIndex === userAnswer && !isCorrect) {
+            optionBtn.classList.add('incorrect');
+          }
+        });
+        
+        const explanation = document.getElementById('explanation-' + index);
+        if (explanation) {
+          explanation.classList.remove('hidden');
+          explanation.querySelector('p').textContent = '💡 ' + quiz.explanation;
+        }
+      });
+      
+      const incorrectCount = quizData.length - correctCount;
+      const score = Math.round((correctCount / quizData.length) * 100);
+      
+      const resultDiv = document.getElementById('quiz-result');
+      const correctCountEl = document.getElementById('correct-count');
+      const incorrectCountEl = document.getElementById('incorrect-count');
+      const finalScoreEl = document.getElementById('final-score');
+      const feedbackEl = document.getElementById('feedback-message');
+      
+      if (correctCountEl) correctCountEl.textContent = correctCount + '/' + quizData.length;
+      if (incorrectCountEl) incorrectCountEl.textContent = incorrectCount + '/' + quizData.length;
+      if (finalScoreEl) finalScoreEl.textContent = score + '%';
+      
+      if (feedbackEl) {
+        if (score >= 80) {
+          feedbackEl.className = 'mt-6 rounded-lg p-4 text-center font-semibold bg-green-100 text-green-800';
+          feedbackEl.textContent = '🎉 Luar biasa! Pemahaman Anda tentang termokimia sangat baik!';
+        } else if (score >= 60) {
+          feedbackEl.className = 'mt-6 rounded-lg p-4 text-center font-semibold bg-yellow-100 text-yellow-800';
+          feedbackEl.textContent = '👍 Bagus! Terus tingkatkan pemahaman Anda tentang termokimia!';
+        } else {
+          feedbackEl.className = 'mt-6 rounded-lg p-4 text-center font-semibold bg-red-100 text-red-800';
+          feedbackEl.textContent = '�� Terus belajar! Ulangi materi dan coba lagi untuk hasil lebih baik!';
+        }
+      }
+      
+      if (resultDiv) {
+        resultDiv.classList.remove('hidden');
+        setTimeout(() => {
+          resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+    
+    async function onConfigChange(config) {
+      const mainTitle = document.getElementById('main-title');
+      const welcomeMessage = document.getElementById('welcome-message');
+      const nextButtonText = document.getElementById('next-button-text');
+      
+      if (mainTitle) {
+        mainTitle.textContent = config.site_title || defaultConfig.site_title;
+      }
+      
+      if (welcomeMessage) {
+        welcomeMessage.textContent = config.welcome_text || defaultConfig.welcome_text;
+      }
+      
+      if (nextButtonText && currentPage < totalPages) {
+        nextButtonText.textContent = (config.button_text || defaultConfig.button_text) + ' →';
+      }
+    }
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: defaultConfig,
+        onConfigChange: onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["site_title", config.site_title || defaultConfig.site_title],
+          ["welcome_text", config.welcome_text || defaultConfig.welcome_text],
+          ["button_text", config.button_text || defaultConfig.button_text]
+        ])
+      });
+    }
+    
+    showPage(1);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ae62d8866746b5d',t:'MTc2NTgwNDE5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
